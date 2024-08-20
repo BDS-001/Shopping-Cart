@@ -1,0 +1,12 @@
+.item-purchase {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.item-purchase input {
+    max-width: 80px;
+}
