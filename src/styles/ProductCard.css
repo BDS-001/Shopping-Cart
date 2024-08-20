@@ -22,8 +22,8 @@
   .card-image {
     width: 100%;
     height: 250px;
-    object-fit: contain; /* Changed from 'cover' to 'contain' */
-    background-color: white; /* Slightly lighter background for the image area */
+    object-fit: contain; 
+    background-color: white;
   }
   
   .card-content {
@@ -36,19 +36,19 @@
   .card-price {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #3498db; /* Light blue for emphasis */
+    color: #3498db;
     margin: 0 0 0.5rem 0;
   }
   
   .card-title {
     margin: 0 0 0.75rem 0;
     font-size: 1.25rem;
-    color: #ecf0f1; /* Light color for visibility */
+    color: #ecf0f1; 
   }
   
   .card-description {
     margin-bottom: 1rem;
-    color: #bdc3c7; /* Slightly darker shade for secondary text */
+    color: #bdc3c7; 
     font-size: 0.9rem;
     line-height: 1.4;
   }
@@ -60,8 +60,8 @@
     padding: 0.75rem;
     justify-content: space-between;
     gap: 10px;
-    background-color: #34495e; /* Slightly lighter than the card background */
-    border-top: 1px solid #4a6278; /* Subtle border */
+    background-color: #34495e; 
+    border-top: 1px solid #4a6278; 
     margin-top: auto;
   }
   
