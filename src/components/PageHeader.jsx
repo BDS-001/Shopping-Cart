@@ -11,7 +11,7 @@ function PageHeader({cartCount}) {
                     <ul className="nav-list">
                         <li className="nav-item"><Link to="/">Homepage</Link></li>
                         <li className="nav-item"><Link to="/shop">Shop</Link></li>
-                        <li className="nav-item"><Link to="/cart">Cart <div className="item-count">{cartCount}</div> </Link></li>
+                        <li className="nav-item"><Link to="/cart">Cart {cartCount < 1 ? null : <div className="item-count">{cartCount}</div> }</Link></li>
                         <li className="nav-item"><Link to="/gfgdfgdfsdfs">Test Error Page</Link></li>
                     </ul>
                 </nav>
