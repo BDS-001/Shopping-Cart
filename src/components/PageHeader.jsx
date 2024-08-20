@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import '../styles/PageHeader.css'
+import PropTypes from 'prop-types';
 
-function PageHeader() {
+function PageHeader({cartCount}) {
     return (
         <header className="header">
             <div className="header-content">
@@ -10,7 +11,7 @@ function PageHeader() {
                     <ul className="nav-list">
                         <li className="nav-item"><Link to="/">Homepage</Link></li>
                         <li className="nav-item"><Link to="/shop">Shop</Link></li>
-                        <li className="nav-item"><Link to="/cart">Cart <div className="item-count">10</div> </Link></li>
+                        <li className="nav-item"><Link to="/cart">Cart <div className="item-count">{cartCount}</div> </Link></li>
                         <li className="nav-item"><Link to="/gfgdfgdfsdfs">Test Error Page</Link></li>
                     </ul>
                 </nav>
@@ -20,3 +21,7 @@ function PageHeader() {
 }
 
 export default PageHeader;
+
+PageHeader.propTypes = {
+    cartCount: PropTypes.number
+}

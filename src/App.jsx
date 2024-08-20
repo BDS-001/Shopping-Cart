@@ -10,6 +10,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cartCount, setCartCount] = useState(1)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,9 +35,9 @@ function App() {
 
   return (
       <>
-        <PageHeader />
+        <PageHeader cartCount={cartCount} />
         <main>
-          {loading ? <LoadingScreen /> : <Outlet context={{ products, categories }} />}
+          {loading ? <LoadingScreen /> : <Outlet context={{ products, categories, cartCount, setCartCount }} />}
         </main>
         <PageFooter />
       </>

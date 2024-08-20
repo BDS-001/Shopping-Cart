@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import "../styles/ProductCard.css"
 
-const handleCountChange = (e) => {
+const handleCountChange = (e, setItemCount) => {
   const value = parseInt(e.target.value, 10);
   setItemCount(value >= 1 ? value : 1);
 };
 
 const handleAddToCart = () => {
-  console.log(`Adding ${itemCount} of ${title} to cart`);
+  console.log('button was clicked')
 };
 
 const Card = ({ imageUrl, title, description }) => {
@@ -22,8 +22,8 @@ const Card = ({ imageUrl, title, description }) => {
         <p className="card-description">{description}</p>
       </div>
       <div className="item-purchase">
-        <input type="number" value={itemCount} min={1} onChange={handleCountChange} />
-        <button>Add To Cart</button>
+        <input type="number" value={itemCount} min={1} onChange={(e) => handleCountChange(e, setItemCount)} />
+        <button onClick={handleAddToCart}>Add To Cart</button>
       </div>
     </div>
   );
