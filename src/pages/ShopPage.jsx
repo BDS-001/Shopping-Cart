@@ -10,7 +10,7 @@ function ShopPage() {
             <h1>Shop Page</h1>
             <div className="catalogue">
                 {products.map(product => (
-                    <Card key={product.id} imageUrl={product.image} title={product.title} description={product.description} handleAddToCart={handleAddToCart} />
+                    <Card key={product.id} imageUrl={product.image} title={product.title} description={product.description} price={product.price} handleAddToCart={handleAddToCart} />
                 ))}
             </div>
         </>

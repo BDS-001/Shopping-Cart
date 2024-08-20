@@ -7,13 +7,14 @@ const handleCountChange = (e, setItemCount) => {
   setItemCount(value >= 1 ? value : 1);
 };
 
-const Card = ({ imageUrl, title, description, handleAddToCart }) => {
+const Card = ({ imageUrl, title, description, price, handleAddToCart }) => {
   const [itemCount, setItemCount] = useState(1)
 
   return (
     <div className="card">
       <img src={imageUrl} alt={title} className="card-image" />
       <div className="card-content">
+        <h3 className='card-price'>${price}</h3>
         <h2 className="card-title">{title}</h2>
         <p className="card-description">{description}</p>
       </div>
@@ -32,5 +33,6 @@ Card.propTypes = {
     imageUrl: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
+    price: PropTypes.string,
     handleAddToCart: PropTypes.func
 }
