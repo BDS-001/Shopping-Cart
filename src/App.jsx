@@ -10,7 +10,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [cartCount, setCartCount] = useState(1)
+  const [cartCount, setCartCount] = useState(0)
 
   useEffect(() => {
     const fetchData = async () => {
