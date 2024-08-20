@@ -7,11 +7,7 @@ const handleCountChange = (e, setItemCount) => {
   setItemCount(value >= 1 ? value : 1);
 };
 
-const handleAddToCart = () => {
-  console.log('button was clicked')
-};
-
-const Card = ({ imageUrl, title, description }) => {
+const Card = ({ imageUrl, title, description, handleAddToCart }) => {
   const [itemCount, setItemCount] = useState(1)
 
   return (
@@ -23,7 +19,7 @@ const Card = ({ imageUrl, title, description }) => {
       </div>
       <div className="item-purchase">
         <input type="number" value={itemCount} min={1} onChange={(e) => handleCountChange(e, setItemCount)} />
-        <button onClick={handleAddToCart}>Add To Cart</button>
+        <button onClick={() => handleAddToCart(itemCount)}>Add To Cart</button>
       </div>
     </div>
   );
@@ -36,4 +32,5 @@ Card.propTypes = {
     imageUrl: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
+    handleAddToCart: PropTypes.func
 }
