@@ -10,10 +10,30 @@ function App() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [cartCount, setCartCount] = useState(0)
+  const [cartCount, setCartCount] = useState(0);
+  const [cart, setCart] = useState([])
 
-  const handleAddToCart = (itemCount) => {
+  const handleAddToCart = (itemCount, productData) => {
     setCartCount(prevCount => prevCount + itemCount )
+    if (cart.some(prod => prod.id === productData.id)) {
+      setCart(prevCart => {
+        return prevCart.map(entry =>
+          entry.id === productData.id ? {...entry, amount: entry.amount + itemCount} : entry
+        )
+      });
+    } else {
+      setCart(prevCart =>
+        [
+          ...prevCart,
+          {
+            id: productData.id,
+            amount: itemCount,
+            productData: productData
+          }
+        ]
+      )
+    }
+    console.log(cart)
   };
 
   useEffect(() => {
@@ -41,7 +61,7 @@ function App() {
       <>
         <PageHeader cartCount={cartCount} />
         <main>
-          {loading ? <LoadingScreen /> : <Outlet context={{ products, categories, cartCount, setCartCount, handleAddToCart }} />}
+          {loading ? <LoadingScreen /> : <Outlet context={{ products, categories, cartCount, setCartCount, handleAddToCart, cart }} />}
         </main>
         <PageFooter />
       </>
