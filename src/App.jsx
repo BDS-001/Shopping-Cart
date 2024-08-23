@@ -36,6 +36,28 @@ function App() {
     console.log(cart)
   };
 
+  const handleQuantityChange = (adjustmentDirection, id) => {
+    if (cart.find(product => product.id === id).amount === 1 && adjustmentDirection === '-') {
+      handleRemoveFromCart(id)
+      return
+    }
+
+    let adjustmentFactor = 1
+    if (adjustmentDirection === '-') adjustmentFactor *= -1
+    setCartCount(prevCount => prevCount + adjustmentFactor)
+    setCart(prevCart => {
+      return prevCart.map(entry =>
+        (entry.id === id) ? {...entry, amount: entry.amount + adjustmentFactor} : entry
+      )
+    });
+  };
+
+  const handleRemoveFromCart = (id) => {
+    setCart(prevCart => (
+      prevCart.filter(entry => entry.id !== id)
+    ));
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,8 +65,6 @@ function App() {
           getProducts('https://fakestoreapi.com/products'),
           getCategories()
         ]);
-        console.log(productsData)
-        console.log(categoriesData)
         setProducts(productsData);
         setCategories(categoriesData);
       } catch (error) {
@@ -61,7 +81,7 @@ function App() {
       <>
         <PageHeader cartCount={cartCount} />
         <main>
-          {loading ? <LoadingScreen /> : <Outlet context={{ products, categories, cartCount, setCartCount, handleAddToCart, cart }} />}
+          {loading ? <LoadingScreen /> : <Outlet context={{ products, categories, cartCount, setCartCount, handleAddToCart, cart, handleQuantityChange }} />}
         </main>
         <PageFooter />
       </>

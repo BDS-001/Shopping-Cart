@@ -1,17 +1,9 @@
 import '../styles/CartItem.css';
 import PropTypes from 'prop-types';
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, handleQuantityChange }) => {
   const { amount, productData } = item;
   const { imageUrl, title, price } = productData;
-
-  const handleQuantityChange = () => {
-    // Empty function for now
-  };
-
-  const handleRemove = () => {
-    // Empty function for now
-  };
 
   return (
     <div className="cart-item">
@@ -22,11 +14,11 @@ const CartItem = ({ item }) => {
         <h3 className="cart-item-title">{title}</h3>
         <div className="cart-item-quantity-section">
           <div className="cart-item-quantity">
-            <button onClick={handleQuantityChange} className="quantity-button">-</button>
+            <button onClick={() => handleQuantityChange('-', item.id)} className="quantity-button">-</button>
             <span>{amount}</span>
             <button onClick={handleQuantityChange} className="quantity-button">+</button>
           </div>
-          <button onClick={handleRemove} className="remove-button">X</button>
+          <button onClick={() => handleQuantityChange('+', item.id)} className="remove-button">X</button>
         </div>
       </div>
       <div className="cart-item-price-container">
@@ -49,4 +41,5 @@ CartItem.propTypes = {
         price: PropTypes.number.isRequired,
       }).isRequired,
     }).isRequired,
+    handleQuantityChange: PropTypes.func.isRequired,
   };
