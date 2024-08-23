@@ -4,3 +4,17 @@
     align-items: center;
     flex: 1;
 }
+
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cart-container-content {
+    max-width: 600px;
+}
+
+.payment {
+    text-align: right;
+}
