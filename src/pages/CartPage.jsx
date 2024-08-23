@@ -13,7 +13,7 @@ function Cart() {
                 <div className="empty">
                 <h1>
                     Your Cart is Empty! go to{' '}
-                    <Link to="/">
+                    <Link to="/shop">
                         <span style={{ color: 'lightblue' }}>
                             Shopping Page
                         </span>
@@ -29,9 +29,9 @@ function Cart() {
                                 <CartItem key={item.id} item={item} handleQuantityChange={handleQuantityChange} handleRemoveFromCart={handleRemoveFromCart} />
                             ))}
                             <div className="payment">
-                                <p>Subtotal: {subtotal.toFixed(2)}</p>
-                                <p>HST(13%): {(subtotal * .13).toFixed(2)}</p>
-                                <p>Total: {(subtotal * 1.13).toFixed(2)}</p>
+                                <p>Subtotal: ${subtotal.toFixed(2)}</p>
+                                <p>HST(13%): ${(subtotal * .13).toFixed(2)}</p>
+                                <p>Total: ${(subtotal * 1.13).toFixed(2)}</p>
                             </div>
                         </div>
                     </div>
