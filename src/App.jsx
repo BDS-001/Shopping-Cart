@@ -37,19 +37,19 @@ function App() {
   };
 
   const handleQuantityChange = (adjustmentDirection, id) => {
-    if (cart.find(product => product.id === id).amount === 1 && adjustmentDirection === '-') {
-      handleRemoveFromCart(id)
-      return
-    }
-
     let adjustmentFactor = 1
     if (adjustmentDirection === '-') adjustmentFactor *= -1
     setCartCount(prevCount => prevCount + adjustmentFactor)
-    setCart(prevCart => {
-      return prevCart.map(entry =>
-        (entry.id === id) ? {...entry, amount: entry.amount + adjustmentFactor} : entry
-      )
-    });
+
+    if (cart.find(product => product.id === id).amount === 1 && adjustmentDirection === '-') {
+      handleRemoveFromCart(id)
+    } else {
+      setCart(prevCart => {
+        return prevCart.map(entry =>
+          (entry.id === id) ? {...entry, amount: entry.amount + adjustmentFactor} : entry
+        )
+      });
+    }
   };
 
   const handleRemoveFromCart = (id) => {
