@@ -33,29 +33,30 @@ function App() {
         ]
       )
     }
-    console.log(cart)
   };
 
   const handleQuantityChange = (adjustmentDirection, id) => {
+    if (cart.find(product => product.id === id).amount === 1 && adjustmentDirection === '-') {
+      handleRemoveFromCart(id)
+      return
+    }
+
     let adjustmentFactor = 1
     if (adjustmentDirection === '-') adjustmentFactor *= -1
     setCartCount(prevCount => prevCount + adjustmentFactor)
-
-    if (cart.find(product => product.id === id).amount === 1 && adjustmentDirection === '-') {
-      handleRemoveFromCart(id)
-    } else {
-      setCart(prevCart => {
-        return prevCart.map(entry =>
-          (entry.id === id) ? {...entry, amount: entry.amount + adjustmentFactor} : entry
-        )
-      });
-    }
+    setCart(prevCart => {
+      return prevCart.map(entry =>
+        (entry.id === id) ? {...entry, amount: entry.amount + adjustmentFactor} : entry
+      )
+    });
   };
 
   const handleRemoveFromCart = (id) => {
+    const quantity = cart.find(product => product.id === id).amount
     setCart(prevCart => (
       prevCart.filter(entry => entry.id !== id)
     ));
+    setCartCount(prevCount => prevCount - quantity)
   };
 
   useEffect(() => {
@@ -81,7 +82,7 @@ function App() {
       <>
         <PageHeader cartCount={cartCount} />
         <main>
-          {loading ? <LoadingScreen /> : <Outlet context={{ products, categories, cartCount, setCartCount, handleAddToCart, cart, handleQuantityChange }} />}
+          {loading ? <LoadingScreen /> : <Outlet context={{ products, categories, cartCount, setCartCount, handleAddToCart, cart, handleQuantityChange, handleRemoveFromCart }} />}
         </main>
         <PageFooter />
       </>
