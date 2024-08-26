@@ -59,6 +59,13 @@ function App() {
     setCartCount(prevCount => prevCount - quantity)
   };
 
+  const processPayment = () => {
+    console.log('processing payment...')
+    setCart([])
+    setCartCount(0)
+    console.log('complete')
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -82,7 +89,7 @@ function App() {
       <>
         <PageHeader cartCount={cartCount} />
         <main>
-          {loading ? <LoadingScreen /> : <Outlet context={{ products, categories, cartCount, setCartCount, handleAddToCart, cart, handleQuantityChange, handleRemoveFromCart }} />}
+          {loading ? <LoadingScreen /> : <Outlet context={{ products, categories, cartCount, setCartCount, handleAddToCart, cart, handleQuantityChange, handleRemoveFromCart, processPayment }} />}
         </main>
         <PageFooter />
       </>

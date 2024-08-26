@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import '../styles/CartPage.css'
 
 function Cart() {
-    const { cart, cartCount, handleQuantityChange, handleRemoveFromCart } = useOutletContext();
+    const { cart, cartCount, handleQuantityChange, handleRemoveFromCart, processPayment } = useOutletContext();
     let subtotal = 0
+    
     if (cart.length > 0) subtotal = cart.reduce((total, item) => total + (item.productData.price * item.amount), 0)
     return (
         <>
@@ -32,6 +33,7 @@ function Cart() {
                                 <p>Subtotal: ${subtotal.toFixed(2)}</p>
                                 <p>HST(13%): ${(subtotal * .13).toFixed(2)}</p>
                                 <p>Total: ${(subtotal * 1.13).toFixed(2)}</p>
+                                <button onClick={processPayment}>Checkout</button>
                             </div>
                         </div>
                     </div>
