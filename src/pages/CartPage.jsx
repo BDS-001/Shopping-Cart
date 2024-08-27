@@ -23,6 +23,11 @@ function Cart() {
                 </h1>
             </div> ) : (
                 <>
+                    <div className="overlay disabled-overlay">
+                        <div className="payment-processing">
+                            
+                        </div>
+                    </div>
                     <h1>Cart</h1>
                     <div className="cart-container">
                         <div className="cart-container-content">

@@ -59,11 +59,26 @@ function App() {
     setCartCount(prevCount => prevCount - quantity)
   };
 
-  const processPayment = () => {
+  const processCart = () => {
     console.log('processing payment...')
     setCart([])
     setCartCount(0)
     console.log('complete')
+  }
+  const processPayment = async () => {
+    const overlay = document.querySelector('.overlay')
+    overlay.innerHTML = 'Loading...'
+    overlay.classList.remove('disabled-overlay')
+    try {
+      await new Promise(resolve => setTimeout(resolve, 5000))
+      overlay.innerHTML = 'Payment Complete!'
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    } catch(error) {
+      console.log(error)
+    } finally {
+      processCart()
+      overlay.classList.add('disabled-overlay')
+    }
   }
 
   useEffect(() => {
