@@ -20,9 +20,19 @@ describe('App', () => {
           <App title="React" />
         </BrowserRouter>
       );
-  
       screen.debug();
-  
-      // check if App components renders headline
+      const header = screen.getByRole('banner')
+      expect(header).toBeInTheDocument()
+    });
+    it('renders footer', () => {
+      render(
+        <BrowserRouter>
+          <App title="React" />
+        </BrowserRouter>
+      );
+      screen.debug();
+      const footer = screen.getByRole('contentinfo')
+      expect(footer).toBeInTheDocument()
+      expect(footer).toHaveTextContent('shopping site')
     });
   });
