@@ -67,10 +67,10 @@ function App() {
   }
   const processPayment = async () => {
     const overlay = document.querySelector('.overlay')
-    overlay.innerHTML = 'Loading...'
+    overlay.innerHTML = 'Processing...'
     overlay.classList.remove('disabled-overlay')
     try {
-      await new Promise(resolve => setTimeout(resolve, 5000))
+      await new Promise(resolve => setTimeout(resolve, 3000))
       overlay.innerHTML = 'Payment Complete!'
       await new Promise(resolve => setTimeout(resolve, 1000))
     } catch(error) {
