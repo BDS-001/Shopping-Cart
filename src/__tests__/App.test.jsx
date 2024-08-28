@@ -13,7 +13,7 @@ describe('something truthy and falsy', () => {
   });
 });
 
-describe('App', () => {
+describe('App Page Structure', () => {
     it('renders headline', () => {
       render(
         <BrowserRouter>
@@ -36,3 +36,7 @@ describe('App', () => {
       expect(footer).toHaveTextContent('shopping site')
     });
   });
+
+  describe('App Functions', () => {
+    
+  })
