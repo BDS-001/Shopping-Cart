@@ -37,6 +37,6 @@ describe('App Page Structure', () => {
     });
   });
 
-  describe('App Functions', () => {
+  describe.skip('App Functions', () => {
     
   })
