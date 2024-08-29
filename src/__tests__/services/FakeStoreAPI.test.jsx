@@ -29,7 +29,27 @@ describe('FakeStoreAPI', () => {
             json: () => Promise.resolve(mockProducts),
         })
 
-        const result = await getProducts('')
+        const result = await getProducts('test/url')
+        expect(fetch).toHaveBeenCalledWith('test/url')
         expect(result).toEqual(mockProducts)
     })
+
+    it('functions should throw an error when fetch fails', async () => {
+        const mockResponses = [
+            {
+                ok: false,
+                status: 404,
+            },
+            {
+                ok: false,
+                status: 404,
+            }
+        ]
+        
+        fetch.mockImplementation(() => Promise.resolve(mockResponses.shift()))
+    
+        await expect(getCategories()).rejects.toThrow('HTTP error! status: 404');
+        await expect(getProducts('')).rejects.toThrow('HTTP error! status: 404');
+        expect(fetch).toBeCalledTimes(2)
+      });
 })
