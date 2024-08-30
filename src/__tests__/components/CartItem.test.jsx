@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import CartItem from '../../components/CartItem';
 
 describe('CartItem', () => {
@@ -47,4 +48,30 @@ describe('CartItem', () => {
         expect(screen.getByRole('button', {name: 'X'})).toBeInTheDocument()
 
       });
+
+      it('user interaction works', async () => {
+        const user = userEvent.setup()
+
+        render (
+            <CartItem 
+            item={mockItem} 
+            handleQuantityChange={mockHandleQuantityChange} 
+            handleRemoveFromCart={mockHandleRemoveFromCart}
+            />)
+    
+        screen.debug()
+
+        const increase = screen.getByRole('button', {name: '+'})
+        await user.click(increase)
+        expect(mockHandleQuantityChange).toHaveBeenCalledWith('+', mockItem.id)
+
+        const decrease = screen.getByRole('button', {name: '-'})
+        await user.click(decrease)
+        expect(mockHandleQuantityChange).toHaveBeenCalledWith('-', mockItem.id)
+
+        const remove = screen.getByRole('button', {name: 'X'})
+        await user.click(remove)
+        expect(mockHandleRemoveFromCart).toHaveBeenCalledWith(mockItem.id)
+
+      })
   });
