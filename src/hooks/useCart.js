@@ -5,6 +5,7 @@ function useCart() {
   const [cart, setCart] = useState([]);
 
   const handleAddToCart = (itemCount, productData) => {
+    console.log(productData)
     setCartCount(prevCount => prevCount + itemCount )
     if (cart.some(prod => prod.id === productData.id)) {
       setCart(prevCart => {
