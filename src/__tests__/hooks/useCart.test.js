@@ -3,6 +3,21 @@ import useCart from '../../hooks/useCart.js'
 import { renderHook, act } from '@testing-library/react';
 
 describe('useCart Functionality', () => {
+    const prodData = { 
+        id: 2,
+        imageUrl: "website",
+        title: "Test Item",
+        price: 22.3,
+    }
+
+    const setupCart = () => {
+        const { result } = renderHook(() => useCart())
+        act(() => {
+            result.current.handleAddToCart(3, prodData)
+        })
+        return result
+    }
+    
    it ('variables are rendered', () => {
     const { result } = renderHook(() => useCart());
         
@@ -11,23 +26,22 @@ describe('useCart Functionality', () => {
    })
 
    it('adds item to cart', () => {
-    const { result } = renderHook(() => useCart());
+    const cart = setupCart()
 
-    const prodData = { 
-        id: 2,
-        imageUrl: "website",
-        title: "Test Item",
-        price: 22.3,
-    }
+    expect(cart.current.cart).toHaveLength(1)
+    expect(cart.current.cartCount).toBe(3)
+    expect(cart.current.cart[0].amount).toBe(3)
+    expect(cart.current.cart[0].productData).toMatchObject(prodData)
+   })
+
+   it('removed item from cart', () => {
+    const cart = setupCart()
 
     act(() => {
-        result.current.handleAddToCart(3, prodData)
+        cart.current.handleRemoveFromCart(prodData.id)
     })
 
-    expect(result.current.cart).toHaveLength(1)
-    expect(result.current.cartCount).toBe(3)
-    expect(result.current.cart[0].amount).toBe(3)
-    expect(result.current.cart[0].productData).toMatchObject(prodData)
+    expect(cart.current.cart).toHaveLength(0)
+    expect(cart.current.cartCount).toBe(0)
    })
-    
-  });
+});
