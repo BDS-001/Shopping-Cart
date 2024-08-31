@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import useCart from '../../hooks/useCart.js'
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, waitFor } from '@testing-library/react';
 
 describe('useCart Functionality', () => {
     const prodData = { 
@@ -18,7 +18,7 @@ describe('useCart Functionality', () => {
         return result
     }
     
-   it ('variables are rendered', () => {
+   it ('initialized the cart and cartCount', () => {
     const { result } = renderHook(() => useCart());
         
     expect(result.current.cart).toEqual([]);
@@ -43,5 +43,48 @@ describe('useCart Functionality', () => {
 
     expect(cart.current.cart).toHaveLength(0)
     expect(cart.current.cartCount).toBe(0)
+   })
+
+   it('adds item to cart', () => {
+    const cart = setupCart()
+
+    expect(cart.current.cart).toHaveLength(1)
+    expect(cart.current.cartCount).toBe(3)
+    expect(cart.current.cart[0].amount).toBe(3)
+    expect(cart.current.cart[0].productData).toMatchObject(prodData)
+   })
+
+   it('changes item quantity', async () => {
+    const cart = setupCart()
+
+    act(() => {
+        cart.current.handleQuantityChange('+', prodData.id)
+    })
+
+    await waitFor(() => {
+        expect(cart.current.cart[0].amount).toBe(4)
+        expect(cart.current.cartCount).toBe(4)
+    })
+
+    act(() => {
+        cart.current.handleQuantityChange('-', prodData.id)
+        cart.current.handleQuantityChange('-', prodData.id)
+    })
+
+    await waitFor(() => {
+        expect(cart.current.cart[0].amount).toBe(2)
+        expect(cart.current.cartCount).toBe(2)
+    })
+
+    act(() => {
+        cart.current.handleQuantityChange('-', prodData.id)
+        cart.current.handleQuantityChange('-', prodData.id)
+    })
+
+    await waitFor(() => {
+        expect(cart.current.cartCount).toBe(0)
+        expect(cart.current.cart).toHaveLength(0)
+    })
+
    })
 });

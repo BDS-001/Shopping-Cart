@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 function useCart() {
   const [cartCount, setCartCount] = useState(0);
@@ -27,21 +27,24 @@ function useCart() {
     }
   };
 
-  const handleQuantityChange = (adjustmentDirection, id) => {
-    if (cart.find(product => product.id === id).amount === 1 && adjustmentDirection === '-') {
-      handleRemoveFromCart(id)
-      return
-    }
-
-    let adjustmentFactor = 1
-    if (adjustmentDirection === '-') adjustmentFactor *= -1
-    setCartCount(prevCount => prevCount + adjustmentFactor)
+  const handleQuantityChange = useCallback((adjustmentDirection, id) => {
     setCart(prevCart => {
-      return prevCart.map(entry =>
-        (entry.id === id) ? {...entry, amount: entry.amount + adjustmentFactor} : entry
-      )
+      const product = prevCart.find(item => item.id === id);
+      if (!product) return prevCart;
+
+      if (product.amount === 1 && adjustmentDirection === '-') {
+        setCartCount(prev => prev - 1);
+        return prevCart.filter(item => item.id !== id);
+      }
+
+      const adjustmentFactor = adjustmentDirection === '+' ? 1 : -1;
+      setCartCount(prev => prev + adjustmentFactor);
+
+      return prevCart.map(item =>
+        item.id === id ? { ...item, amount: item.amount + adjustmentFactor } : item
+      );
     });
-  };
+  }, []);
 
   const handleRemoveFromCart = (id) => {
     const quantity = cart.find(product => product.id === id).amount
