@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import { describe, it, vi, expect, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Cart from '../../pages/CartPage';
 
@@ -15,6 +16,29 @@ describe('cart component', () => {
     beforeEach(() => {
         vi.resetAllMocks()
     })
+
+    const cartData = [
+        {
+          "id": 4,
+          "amount": 2,
+          "productData": {
+            "id": 4,
+            "imageUrl": "url1",
+            "title": "Shirt",
+            "price": 15.99
+          }
+        },
+        {
+          "id": 10,
+          "amount": 1,
+          "productData": {
+            "id": 10,
+            "imageUrl": "url2",
+            "title": "SanDisk SSD",
+            "price": 109
+          }
+        }
+      ]
 
     it('renders empty cart message when cart is empty', () => {
         useOutletContext.mockReturnValue({
@@ -33,28 +57,6 @@ describe('cart component', () => {
     })
 
     it('renders cart items', () => {
-        const cartData = [
-            {
-              "id": 4,
-              "amount": 2,
-              "productData": {
-                "id": 4,
-                "imageUrl": "url1",
-                "title": "Shirt",
-                "price": 15.99
-              }
-            },
-            {
-              "id": 10,
-              "amount": 1,
-              "productData": {
-                "id": 10,
-                "imageUrl": "url2",
-                "title": "SanDisk SSD",
-                "price": 109
-              }
-            }
-          ]
         useOutletContext.mockReturnValue({
             cart: cartData,
             cartCount: 3,
@@ -70,4 +72,40 @@ describe('cart component', () => {
           expect(screen.getByText(`$${cartData[0].productData.price.toFixed(2)}`)).toBeInTheDocument();
           expect(screen.getByText(`$${cartData[1].productData.price.toFixed(2)}`)).toBeInTheDocument();
     })
+
+    it('renders cart cost', () => {
+        useOutletContext.mockReturnValue({
+            cart: cartData,
+            cartCount: 3,
+            handleQuantityChange: vi.fn(),
+            handleRemoveFromCart: vi.fn(),
+            processPayment: vi.fn(),
+          });
+
+          render(<Cart />)
+
+          expect(screen.getByText('Subtotal: $140.98')).toBeInTheDocument();
+          expect(screen.getByText('HST(13%): $18.33')).toBeInTheDocument();
+          expect(screen.getByText(`Total: $159.31`)).toBeInTheDocument();
+    })
+
+    it('checkout functions', async () => {
+        useOutletContext.mockReturnValue({
+            cart: cartData,
+            cartCount: 3,
+            handleQuantityChange: vi.fn(),
+            handleRemoveFromCart: vi.fn(),
+            processPayment: vi.fn(),
+          });
+          const user = userEvent.setup()
+
+          render(<Cart />)
+          const checkout = screen.getByRole('button', {name: 'Checkout'})
+
+          expect(checkout).toBeInTheDocument();
+          await user.click(checkout)
+          expect(useOutletContext().processPayment).toHaveBeenCalled();
+    })
+
+
 })
