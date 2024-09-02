@@ -39,7 +39,6 @@ describe('Routes', () => {
       expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
     });
 
-    // Use a more flexible matching strategy
     expect(screen.getByText(/Your Cart is Empty!/i)).toBeInTheDocument();
     expect(screen.getByText(/Shopping Page/i)).toBeInTheDocument();
     expect(screen.getByText(/to get some items!/i)).toBeInTheDocument();
