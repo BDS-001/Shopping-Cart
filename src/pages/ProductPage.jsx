@@ -1,18 +1,19 @@
-import { useOutletContext } from "react-router-dom"
+import { useOutletContext, useParams } from "react-router-dom"
 
 export default function ProductPage() {
-    const { product } = useOutletContext();
+    const { product, handleAddToCart } = useOutletContext();
+    const { name } = useParams();
 
     return (
         <>
             {!product ? (
                 <>
-                Product Does Not Exist
+                { name } is not a product
                 </>
             ) :
             (
                 <>
-                Product Do exist
+                {product.title} is a product
                 </>
             )
             }

@@ -6,7 +6,7 @@ import '../styles/ShopPage.css'
 function ShopPage() {
     const { products, handleAddToCart } = useOutletContext();
     const { name } = useParams();
-    const product = products.find(({title}) => title === name)
+    const product = name ? products.find(({title}) => title === name) : null
 
     return (
         <>
@@ -26,7 +26,7 @@ function ShopPage() {
                     ))}
                 </div>
             )}
-            <Outlet context={product} />
+            <Outlet context={{ product, handleAddToCart }} />
         </>
     );
 }
