@@ -1,8 +1,20 @@
-.error{
+.error {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 80vh;
     text-align: center;
-    padding: 40px;
-}
+    padding: 2rem;
+  }
+  
+  .error h1 {
+    font-size: 1.75rem;
+    line-height: 1.5;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .error span {
+    color: var(--primary-color);
+    font-weight: 500;
+  }
